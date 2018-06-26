@@ -1,7 +1,13 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 
-const DeckListItem = ({ name, cardCount }) => (
+const DeckListItem = ({
+  name,
+  cardCount,
+}: {
+  name: string;
+  cardCount: number;
+}) => (
   <TouchableOpacity
     style={{
       justifyContent: 'center',
