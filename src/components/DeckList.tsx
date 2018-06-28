@@ -1,31 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
-
-const DeckListItem = ({
-  name,
-  cardCount,
-}: {
-  name: string;
-  cardCount: number;
-}) => (
-  <TouchableOpacity
-    style={{
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderColor: 'black',
-      borderStyle: 'solid',
-      borderWidth: 1,
-      height: 150,
-      marginHorizontal: 15,
-      marginVertical: 10,
-    }}
-  >
-    <Text>{name} </Text>
-    <Text>
-      {cardCount} card{cardCount !== 1 ? 's' : ''}
-    </Text>
-  </TouchableOpacity>
-);
+import { View, FlatList } from 'react-native';
+import DeckListItem from './DeckListItem';
 
 const DeckList = () => (
   <View
