@@ -1,9 +1,15 @@
-import { createStackNavigator } from 'react-navigation';
+import React from 'react';
+import {
+  createStackNavigator,
+  NavigationContainerComponent,
+} from 'react-navigation';
+
+import NavigationService from './NavigationService';
 
 import DeckList from './components/DeckList';
 import Deck from './components/Deck';
 
-export default createStackNavigator({
+const Navigator = createStackNavigator({
   Home: {
     screen: DeckList,
   },
@@ -11,3 +17,15 @@ export default createStackNavigator({
     screen: Deck,
   },
 });
+
+const App = () => {
+  return (
+    <Navigator
+      ref={(navigatorRef: NavigationContainerComponent) => {
+        NavigationService.setTopLevelNavigator(navigatorRef);
+      }}
+    />
+  );
+};
+
+export default App;

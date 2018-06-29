@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
-import DeckListItem from './DeckListItem';
-import { NavigationScreenProp } from 'react-navigation';
 
-const DeckList = (props: { navigation: NavigationScreenProp<{}> }) => (
+import { navigate } from '../NavigationService';
+
+import DeckListItem from './DeckListItem';
+
+const DeckList = () => (
   <View
     style={{
       alignSelf: 'stretch',
@@ -24,11 +26,7 @@ const DeckList = (props: { navigation: NavigationScreenProp<{}> }) => (
       renderItem={p => (
         <DeckListItem
           {...p.item}
-          onCardPress={() => {
-            props.navigation.navigate('Deck', {
-              key: p.item.key,
-            });
-          }}
+          onCardPress={() => navigate('Deck', { key: p.item.key })}
         />
       )}
     />
