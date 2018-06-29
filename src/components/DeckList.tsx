@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import DeckListItem from './DeckListItem';
+import { NavigationScreenProp } from 'react-navigation';
 
-const DeckList = () => (
+const DeckList = (props: { navigation: NavigationScreenProp<{}> }) => (
   <View
     style={{
       alignSelf: 'stretch',
@@ -20,7 +21,16 @@ const DeckList = () => (
         { key: 'Spanish', name: 'Spanish', cardCount: 0 },
         { key: 'Geography', name: 'Geography', cardCount: 3 },
       ]}
-      renderItem={p => <DeckListItem {...p.item} />}
+      renderItem={p => (
+        <DeckListItem
+          {...p.item}
+          onCardPress={() => {
+            props.navigation.navigate('Deck', {
+              key: p.item.key,
+            });
+          }}
+        />
+      )}
     />
   </View>
 );

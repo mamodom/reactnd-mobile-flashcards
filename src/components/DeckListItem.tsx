@@ -4,10 +4,10 @@ import { Text, TouchableOpacity } from 'react-native';
 export type DeckListItemProps = {
   name: string;
   cardCount: number;
-  onCardPress?: Function;
+  onCardPress: () => void;
 };
 
-const DeckListItem = ({ name, cardCount }: DeckListItemProps) => (
+const DeckListItem = ({ name, cardCount, onCardPress }: DeckListItemProps) => (
   <TouchableOpacity
     style={{
       justifyContent: 'center',
@@ -19,6 +19,7 @@ const DeckListItem = ({ name, cardCount }: DeckListItemProps) => (
       marginHorizontal: 15,
       marginVertical: 10,
     }}
+    onPress={onCardPress}
   >
     <Text>{name} </Text>
     <Text>
