@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { SFC } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
-export type DeckListItemProps = {
+type DeckListItemProps = {
   name: string;
   cardCount: number;
   onCardPress: () => void;
 };
 
-const DeckListItem = ({ name, cardCount, onCardPress }: DeckListItemProps) => (
+const DeckListItem: SFC<DeckListItemProps> = ({
+  name,
+  cardCount,
+  onCardPress,
+}) => (
   <TouchableOpacity
     style={{
       justifyContent: 'center',

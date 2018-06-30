@@ -3,11 +3,14 @@ import {
   createStackNavigator,
   NavigationContainerComponent,
 } from 'react-navigation';
-
-import NavigationService from './NavigationService';
+import { Provider } from 'react-redux';
 
 import DeckList from './components/DeckList';
 import Deck from './components/Deck';
+
+import NavigationService from './NavigationService';
+
+import store from './store';
 
 const Navigator = createStackNavigator({
   Home: {
@@ -20,11 +23,13 @@ const Navigator = createStackNavigator({
 
 const App = () => {
   return (
-    <Navigator
-      ref={(navigatorRef: NavigationContainerComponent) => {
-        NavigationService.setTopLevelNavigator(navigatorRef);
-      }}
-    />
+    <Provider store={store}>
+      <Navigator
+        ref={(navigatorRef: NavigationContainerComponent) => {
+          NavigationService.setTopLevelNavigator(navigatorRef);
+        }}
+      />
+    </Provider>
   );
 };
 
