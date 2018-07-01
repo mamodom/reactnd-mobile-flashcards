@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { SFC } from 'react';
 import { View, FlatList } from 'react-native';
+import { connect } from 'react-redux';
 
 import { navigate } from '../NavigationService';
+import { MapStateToPropsType } from '../utils';
+import { Deck } from '../reducers/decks';
 
 import DeckListItem from './DeckListItem';
 
-const DeckList = () => (
+const DeckList: SFC<DeckListProps> = ({ decks }) => (
   <View
     style={{
       alignSelf: 'stretch',
@@ -13,24 +16,24 @@ const DeckList = () => (
     }}
   >
     <FlatList
-      data={[
-        { key: 'History', name: 'History', cardCount: 1 },
-        { key: 'Physics', name: 'Physics', cardCount: 2 },
-        { key: 'Maths', name: 'Maths', cardCount: 3 },
-        { key: 'Chemestry', name: 'Chemestry', cardCount: 1 },
-        { key: 'Biology', name: 'Biology', cardCount: 5 },
-        { key: 'French', name: 'French', cardCount: 2 },
-        { key: 'Spanish', name: 'Spanish', cardCount: 0 },
-        { key: 'Geography', name: 'Geography', cardCount: 3 },
-      ]}
-      renderItem={p => (
+      data={decks}
+      keyExtractor={deck => deck.id}
+      renderItem={({ item }) => (
         <DeckListItem
-          {...p.item}
-          onCardPress={() => navigate('Deck', { key: p.item.key })}
+          {...item}
+          onCardPress={() => navigate('Deck', { key: item.id })}
         />
       )}
     />
   </View>
 );
 
-export default DeckList;
+type DeckListProps = {
+  decks: Deck[];
+};
+
+const mapStateToProps: MapStateToPropsType<DeckListProps> = ({ decks }) => {
+  return { decks: Object.values(decks) };
+};
+
+export default connect(mapStateToProps)(DeckList);

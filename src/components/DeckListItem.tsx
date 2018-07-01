@@ -1,16 +1,16 @@
 import React, { SFC } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
+import { Deck } from '../reducers/decks';
 
-type DeckListItemProps = {
-  name: string;
-  cardCount: number;
+type DeckListItemProps = Deck & {
   onCardPress: () => void;
 };
 
 const DeckListItem: SFC<DeckListItemProps> = ({
-  name,
-  cardCount,
+  title,
+  questions,
   onCardPress,
+  id,
 }) => (
   <TouchableOpacity
     style={{
@@ -25,9 +25,11 @@ const DeckListItem: SFC<DeckListItemProps> = ({
     }}
     onPress={onCardPress}
   >
-    <Text>{name} </Text>
     <Text>
-      {cardCount} card{cardCount !== 1 ? 's' : ''}
+      {id} {title}
+    </Text>
+    <Text>
+      {questions.length} card{questions.length !== 1 ? 's' : ''}
     </Text>
   </TouchableOpacity>
 );
