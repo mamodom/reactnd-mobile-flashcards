@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -6,34 +6,54 @@ import { navigate } from '../NavigationService';
 import { MapStateToPropsType } from '../utils';
 import { Deck } from '../reducers/decks';
 
+import { fetchDecks } from '../actions';
+
 import DeckListItem from './DeckListItem';
 
-const DeckList: SFC<DeckListProps> = ({ decks }) => (
-  <View
-    style={{
-      alignSelf: 'stretch',
-      flex: 1,
-    }}
-  >
-    <FlatList
-      data={decks}
-      keyExtractor={deck => deck.id}
-      renderItem={({ item }) => (
-        <DeckListItem
-          {...item}
-          onCardPress={() => navigate('Deck', { key: item.id })}
+class DeckList extends Component<DeckListProps> {
+  componentDidMount() {
+    this.props.fetchDecks();
+  }
+
+  render() {
+    const { decks } = this.props;
+    return (
+      <View
+        style={{
+          alignSelf: 'stretch',
+          flex: 1,
+        }}
+      >
+        <FlatList
+          data={decks}
+          keyExtractor={deck => deck.id}
+          renderItem={({ item }) => (
+            <DeckListItem
+              {...item}
+              onCardPress={() => navigate('Deck', { key: item.id })}
+            />
+          )}
         />
-      )}
-    />
-  </View>
-);
+      </View>
+    );
+  }
+}
 
 type DeckListProps = {
+  fetchDecks: () => void;
+} & DeckListStateProps;
+
+type DeckListStateProps = {
   decks: Deck[];
 };
 
-const mapStateToProps: MapStateToPropsType<DeckListProps> = ({ decks }) => {
+const mapStateToProps: MapStateToPropsType<DeckListStateProps> = ({
+  decks,
+}) => {
   return { decks: Object.values(decks) };
 };
 
-export default connect(mapStateToProps)(DeckList);
+export default connect(
+  mapStateToProps,
+  { fetchDecks }
+)(DeckList);

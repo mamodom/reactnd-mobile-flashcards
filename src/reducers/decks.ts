@@ -1,4 +1,4 @@
-import { Action, Reducer } from 'redux';
+import { AnyAction, Reducer } from 'redux';
 
 import { Hash } from '../utils';
 
@@ -12,9 +12,11 @@ const DEFAULT_STATE: Hash<Deck> = {};
 
 const reducer: Reducer<Hash<Deck>> = (
   state = DEFAULT_STATE,
-  action: Action<string>
+  action: AnyAction
 ) => {
   switch (action.type) {
+    case 'decks.fetched':
+      return action.decks;
     default:
       return state;
   }
