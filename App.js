@@ -1,2 +1,1 @@
-import App from './build/App';
-export default App;
+export { default } from './build/App';
