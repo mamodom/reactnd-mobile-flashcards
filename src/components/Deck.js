@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 
-type DeckProps = { navigation: NavigationScreenProp<{}> };
-
-class Deck extends Component<DeckProps> {
-  static navigationOptions: (props: DeckProps) => any = ({ navigation }) => {
+class Deck extends Component {
+  static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('key'),
     };

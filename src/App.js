@@ -25,7 +25,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <Navigator
-        ref={(navigatorRef: NavigationContainerComponent) => {
+        ref={navigatorRef => {
           NavigationService.setTopLevelNavigator(navigatorRef);
         }}
       />

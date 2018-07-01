@@ -1,17 +1,7 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import { Deck } from '../reducers/decks';
 
-type DeckListItemProps = Deck & {
-  onCardPress: () => void;
-};
-
-const DeckListItem: SFC<DeckListItemProps> = ({
-  title,
-  questions,
-  onCardPress,
-  id,
-}) => (
+const DeckListItem = ({ title, questions, onCardPress, id }) => (
   <TouchableOpacity
     style={{
       justifyContent: 'center',

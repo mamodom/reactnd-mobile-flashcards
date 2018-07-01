@@ -3,14 +3,12 @@ import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 
 import { navigate } from '../NavigationService';
-import { MapStateToPropsType } from '../utils';
-import { Deck } from '../reducers/decks';
 
 import { fetchDecks } from '../actions';
 
 import DeckListItem from './DeckListItem';
 
-class DeckList extends Component<DeckListProps> {
+class DeckList extends Component {
   componentDidMount() {
     this.props.fetchDecks();
   }
@@ -39,17 +37,7 @@ class DeckList extends Component<DeckListProps> {
   }
 }
 
-type DeckListProps = {
-  fetchDecks: () => void;
-} & DeckListStateProps;
-
-type DeckListStateProps = {
-  decks: Deck[];
-};
-
-const mapStateToProps: MapStateToPropsType<DeckListStateProps> = ({
-  decks,
-}) => {
+const mapStateToProps = ({ decks }) => {
   return { decks: Object.values(decks) };
 };
 
