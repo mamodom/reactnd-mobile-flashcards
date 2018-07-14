@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 import DeckList from './components/DeckList';
 import Deck from './components/Deck';
 import CreateDeck from './components/CreateDeck';
+import AddCard from './components/AddCard';
+import Quiz from './components/Quiz';
 
 import NavigationService from './NavigationService';
 
@@ -16,6 +18,8 @@ const Navigator = createStackNavigator({
   },
   Deck,
   CreateDeck,
+  AddCard,
+  Quiz,
 });
 
 const App = () => {
