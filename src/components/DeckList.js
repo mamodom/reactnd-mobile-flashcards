@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Button } from 'react-native';
 import { connect } from 'react-redux';
 
 import { navigate } from '../NavigationService';
@@ -32,6 +32,14 @@ class DeckList extends Component {
             />
           )}
         />
+        <View>
+          <Button
+            onPress={() => {
+              navigate('CreateDeck');
+            }}
+            title="Create Deck"
+          />
+        </View>
       </View>
     );
   }

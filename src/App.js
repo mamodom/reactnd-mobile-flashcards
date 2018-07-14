@@ -1,12 +1,10 @@
 import React from 'react';
-import {
-  createStackNavigator,
-  NavigationContainerComponent,
-} from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
 
 import DeckList from './components/DeckList';
 import Deck from './components/Deck';
+import CreateDeck from './components/CreateDeck';
 
 import NavigationService from './NavigationService';
 
@@ -16,9 +14,8 @@ const Navigator = createStackNavigator({
   Home: {
     screen: DeckList,
   },
-  Deck: {
-    screen: Deck,
-  },
+  Deck,
+  CreateDeck,
 });
 
 const App = () => {
