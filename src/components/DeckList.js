@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, FlatList, Button } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
+import { FloatingAction } from 'react-native-floating-action';
 
 import { navigate } from '../NavigationService';
 
@@ -32,14 +33,20 @@ class DeckList extends Component {
             />
           )}
         />
-        <View>
-          <Button
-            onPress={() => {
-              navigate('CreateDeck');
-            }}
-            title="Create Deck"
-          />
-        </View>
+        <FloatingAction
+          overrideWithAction
+          actions={[
+            {
+              text: 'Create Deck',
+              name: 'create_deck',
+              position: 1,
+              icon: require('../images/add.png'),
+            },
+          ]}
+          onPressItem={() => {
+            navigate('CreateDeck');
+          }}
+        />
       </View>
     );
   }
