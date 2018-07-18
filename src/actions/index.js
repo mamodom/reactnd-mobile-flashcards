@@ -44,3 +44,16 @@ const deckCreationError = (name, error) => ({
   type: types.decks.create.error,
   name,
 });
+
+export const addCard = ({ deckId, question, answer }) => async dispatch => {
+  await storage.addCard({ deckId, question, answer });
+  dispatch(addCardSuccess({ deckId, question, answer }));
+  back();
+};
+
+const addCardSuccess = ({ deckId, question, answer }) => ({
+  type: types.cards.create.success,
+  deckId,
+  question,
+  answer,
+});

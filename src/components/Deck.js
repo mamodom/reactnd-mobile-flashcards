@@ -30,8 +30,6 @@ class Deck extends Component {
         }}
       >
         {questions.length > 0 ? (
-          <Text>There are no cards in this deck</Text>
-        ) : (
           <Fragment>
             <Text>
               {questions.length} card{questions.length !== 1 ? 's' : ''}
@@ -43,6 +41,8 @@ class Deck extends Component {
               }}
             />
           </Fragment>
+        ) : (
+          <Text>There are no cards in this deck</Text>
         )}
 
         <FloatingAction

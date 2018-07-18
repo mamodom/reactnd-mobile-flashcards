@@ -15,6 +15,20 @@ const reducer = (state = DEFAULT_STATE, action) => {
           questions: [],
         },
       };
+    case types.cards.create.success:
+      return {
+        ...state,
+        [action.deckId]: {
+          ...state[action.deckId],
+          questions: [
+            ...state[action.deckId].questions,
+            {
+              answer: action.answer,
+              question: action.question,
+            },
+          ],
+        },
+      };
     default:
       return state;
   }

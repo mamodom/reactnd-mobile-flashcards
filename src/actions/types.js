@@ -6,4 +6,9 @@ export default {
     },
     fetched: 'decks.fetched',
   },
+  cards: {
+    create: {
+      success: 'cards.create.success',
+    },
+  },
 };
