@@ -1,83 +1,107 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 
-class Quiz extends Component {
-  state = {
-    currentQuestion: 0,
-    showAnswer: false,
-  };
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Title,
+  Subheading,
+  Paragraph,
+} from 'react-native-paper';
 
+class Quiz extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('key'),
     };
   };
 
-  showAnswer = () => {
-    this.setState({ showAnswer: true });
+  state = {
+    currentQuestion: 0,
+    score: 0,
   };
 
   answeredSuccessfully = outcome => {
     this.setState({
-      showAnswer: false,
       currentQuestion: this.state.currentQuestion + 1,
+      score: this.state.score + !!outcome,
     });
   };
-
-  correct = () => this.answeredSuccessfully(true);
-
-  incorrect = () => this.answeredSuccessfully(false);
 
   render() {
     const currentQuestion = this.props.questions[this.state.currentQuestion];
 
     return (
-      <View style={{ flex: 1, alignItems: 'stretch' }}>
-        <View
-          style={{
-            flex: 1,
-            borderColor: 'blue',
-            borderStyle: 'solid',
-            borderWidth: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Card {...currentQuestion} />
-        </View>
-        <Text style={{ alignSelf: 'center' }}>
-          Question 1 of {this.props.questions.length}
-        </Text>
+      <View style={{ flex: 1, alignItems: 'stretch', padding: 15 }}>
+        <Subheading style={{ alignSelf: 'center' }}>
+          Question {this.state.currentQuestion + 1} of{' '}
+          {this.props.questions.length}
+        </Subheading>
+        <Question {...currentQuestion} onAnswered={this.answeredSuccessfully} />
       </View>
     );
   }
 }
 
-const Card = ({ question, answer, showAnswer, onAnswered }) => {
-  return (
-    <View
-      style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: 5,
-        padding: 20,
-      }}
-    >
-      <Text style={{ fontSize: 30 }}>{question}</Text>
-      <TouchableOpacity onPress={() => {}}>
-        <Text> Show Answer</Text>
-      </TouchableOpacity>
-      <Text>{answer}</Text>
-      <TouchableOpacity onPress={() => {}}>
-        <Text> Correct</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => {}}>
-        <Text> Incorrect</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+class Question extends Component {
+  state = {
+    answerVisible: false,
+  };
 
+  showAnswer = () => {
+    this.setState({ answerVisible: true });
+  };
+
+  onAnswered = outcome => {
+    this.setState({ answerVisible: false });
+    this.props.onAnswered(outcome);
+  };
+
+  render() {
+    const { question, answer } = this.props;
+    if (!this.state.answerVisible)
+      return (
+        <Card style={{ marginTop: 15 }}>
+          <CardContent>
+            <View style={{ minHeight: 100 }}>
+              <Title style={{ fontSize: 25 }}>{question}</Title>
+            </View>
+          </CardContent>
+          <CardActions style={{ justifyContent: 'flex-end' }}>
+            <Button key="showAnswer" onPress={this.showAnswer}>
+              Show Answer
+            </Button>
+          </CardActions>
+        </Card>
+      );
+
+    return (
+      <Card style={{ marginTop: 15 }}>
+        <CardContent>
+          <View style={{ minHeight: 100 }}>
+            <Title style={{ fontSize: 25 }}>{question}</Title>
+            <Paragraph>{answer}</Paragraph>
+          </View>
+        </CardContent>
+        <CardActions style={{ justifyContent: 'flex-end' }}>
+          <Button key="correct" primary onPress={() => this.onAnswered(true)}>
+            Correct
+          </Button>
+          <Button
+            key="incorrect"
+            color="red"
+            onPress={() => this.onAnswered(false)}
+          >
+            Incorrect
+          </Button>
+        </CardActions>
+      </Card>
+    );
+  }
+}
 const mapStateToProps = (state, props) => {
   const deckId = props.navigation.getParam('key');
 

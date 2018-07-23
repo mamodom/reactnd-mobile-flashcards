@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 import DeckList from './components/DeckList';
 import Deck from './components/Deck';
@@ -25,11 +26,13 @@ const Navigator = createStackNavigator({
 const App = () => {
   return (
     <Provider store={store}>
-      <Navigator
-        ref={navigatorRef => {
-          NavigationService.setTopLevelNavigator(navigatorRef);
-        }}
-      />
+      <PaperProvider>
+        <Navigator
+          ref={navigatorRef => {
+            NavigationService.setTopLevelNavigator(navigatorRef);
+          }}
+        />
+      </PaperProvider>
     </Provider>
   );
 };
