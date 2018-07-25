@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { Text, TextInput, View, Button } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
+import { Button, TextInput } from 'react-native-paper';
 
 import { addCard } from '../actions';
 
 class AddCard extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: `Add card to ${navigation.getParam('key')}`,
+  });
+
   state = {
     question: '',
     answer: '',
@@ -27,26 +32,25 @@ class AddCard extends Component {
     return (
       <View
         style={{
-          flex: 1,
+          flex: 0.75,
           justifyContent: 'center',
           padding: 15,
         }}
       >
-        <View>
-          <Text>Question</Text>
-          <TextInput
-            value={this.state.question}
-            onChangeText={this.questionChanged}
-          />
-        </View>
-        <View>
-          <Text>Answer</Text>
-          <TextInput
-            value={this.state.answer}
-            onChangeText={this.answerChanged}
-          />
-        </View>
-        <Button title="Add card" onPress={this.addCard} />
+        <TextInput
+          label="Question"
+          value={this.state.question}
+          onChangeText={this.questionChanged}
+        />
+
+        <TextInput
+          label="Answer"
+          value={this.state.answer}
+          onChangeText={this.answerChanged}
+        />
+        <Button style={{ marginTop: 15 }} raised primary onPress={this.addCard}>
+          Add card
+        </Button>
       </View>
     );
   }
