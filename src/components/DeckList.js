@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, FlatList, Button } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { FloatingAction } from 'react-native-floating-action';
+import { FAB } from 'react-native-paper';
 
 import { navigate } from '../NavigationService';
 
@@ -10,6 +10,10 @@ import { fetchDecks } from '../actions';
 import DeckListItem from './DeckListItem';
 
 class DeckList extends Component {
+  static navigationOptions = {
+    title: 'Flashcards',
+  };
+
   componentDidMount() {
     this.props.fetchDecks();
   }
@@ -33,20 +37,16 @@ class DeckList extends Component {
             />
           )}
         />
-        <FloatingAction
-          overrideWithAction
-          actions={[
-            {
-              text: 'Create Deck',
-              name: 'create_deck',
-              position: 1,
-              icon: require('../images/add.png'),
-            },
-          ]}
-          onPressItem={() => {
-            navigate('CreateDeck');
+        <View
+          style={{
+            bottom: 0,
+            right: 0,
+            position: 'absolute',
+            margin: 16,
           }}
-        />
+        >
+          <FAB icon="add" onPress={() => navigate('CreateDeck')} />
+        </View>
       </View>
     );
   }

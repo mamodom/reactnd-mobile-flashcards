@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
+import { TextInput, Button } from 'react-native-paper';
 
 import { createDeck } from '../actions';
 
@@ -37,8 +38,8 @@ class CreateDeck extends Component {
             marginBottom: 10,
           }}
         >
-          <Text style={{ marginRight: 10 }}>Deck Name</Text>
           <TextInput
+            label="Deck name"
             style={{
               flex: 1,
             }}
@@ -46,7 +47,9 @@ class CreateDeck extends Component {
             onChangeText={this.onDeckNameChange}
           />
         </View>
-        <Button title="Create Deck" onPress={this.createDeck} />
+        <Button raised primary onPress={this.createDeck}>
+          Create Deck
+        </Button>
       </View>
     );
   }

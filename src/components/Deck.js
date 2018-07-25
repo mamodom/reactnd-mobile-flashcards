@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { FloatingAction } from 'react-native-floating-action';
+import { Paragraph, FAB, Button } from 'react-native-paper';
 
 import { navigate } from '../NavigationService';
 class Deck extends Component {
@@ -10,14 +10,6 @@ class Deck extends Component {
       title: navigation.getParam('key'),
     };
   };
-
-  actions = [
-    {
-      icon: require('../images/add.png'),
-      name: 'add_card',
-      text: 'Add Card',
-    },
-  ];
 
   render() {
     const { id, questions } = this.props;
@@ -31,27 +23,33 @@ class Deck extends Component {
       >
         {questions.length > 0 ? (
           <Fragment>
-            <Text>
+            <Paragraph>
               {questions.length} card{questions.length !== 1 ? 's' : ''}
-            </Text>
+            </Paragraph>
             <Button
-              title="Start Quiz"
+              raised
+              primary
               onPress={() => {
                 navigate('Quiz', { key: id });
               }}
-            />
+            >
+              Start Quiz
+            </Button>
           </Fragment>
         ) : (
-          <Text>There are no cards in this deck</Text>
+          <Paragraph>There are no cards in this deck</Paragraph>
         )}
 
-        <FloatingAction
-          overrideWithAction
-          actions={this.actions}
-          onPressItem={() => {
-            navigate('AddCard', { key: id });
+        <View
+          style={{
+            bottom: 0,
+            right: 0,
+            position: 'absolute',
+            margin: 16,
           }}
-        />
+        >
+          <FAB icon="add" onPress={() => navigate('AddCard', { key: id })} />
+        </View>
       </View>
     );
   }
