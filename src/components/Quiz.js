@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-
+import { Feather } from '@expo/vector-icons';
 import {
   Button,
   Card,
@@ -10,7 +10,10 @@ import {
   Title,
   Subheading,
   Paragraph,
+  Headline,
 } from 'react-native-paper';
+
+import { navigate, back } from '../NavigationService';
 
 class Quiz extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -22,17 +25,56 @@ class Quiz extends Component {
   state = {
     currentQuestion: 0,
     score: 0,
+    completed: false,
   };
 
   answeredSuccessfully = outcome => {
     this.setState({
       currentQuestion: this.state.currentQuestion + 1,
       score: this.state.score + !!outcome,
+      completed: this.props.questions.length <= this.state.currentQuestion + 1,
     });
+  };
+
+  restartQuiz = () => {
+    back();
+    navigate('Quiz', { key: this.props.navigation.getParam('key') });
   };
 
   render() {
     const currentQuestion = this.props.questions[this.state.currentQuestion];
+
+    if (this.state.completed)
+      return (
+        <View style={{ flex: 1, alignItems: 'center', padding: 15 }}>
+          <Title>QUIZ COMPLETED!</Title>
+          <Feather
+            name="check-circle"
+            size={110}
+            color="green"
+            style={{
+              marginTop: 15,
+            }}
+          />
+          <Headline
+            style={{
+              marginTop: 15,
+            }}
+          >
+            Score: {this.state.score / this.props.questions.length} %
+          </Headline>
+          <Button
+            raised
+            primary
+            style={{
+              marginTop: 15,
+            }}
+            onPress={this.restartQuiz}
+          >
+            Restart Quiz
+          </Button>
+        </View>
+      );
 
     return (
       <View style={{ flex: 1, alignItems: 'stretch', padding: 15 }}>
