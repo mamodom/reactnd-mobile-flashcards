@@ -40,8 +40,16 @@ const addCard = ({ deckId, question, answer }) => {
   });
 };
 
+const getNextNotification = () =>
+  AsyncStorage.getItem('nextNotification').then(JSON.parse);
+
+const setNextNotification = ({ id, time }) =>
+  AsyncStorage.setItem('nextNotification', JSON.stringify({ id, time }));
+
 export default {
   fetchDecks,
   addDeck,
   addCard,
+  getNextNotification,
+  setNextNotification,
 };

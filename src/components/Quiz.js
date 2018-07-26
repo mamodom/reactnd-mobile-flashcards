@@ -14,6 +14,7 @@ import {
 } from 'react-native-paper';
 
 import { navigate, back } from '../NavigationService';
+import { dismissTodaysNotification } from '../notificationService';
 
 class Quiz extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -28,11 +29,18 @@ class Quiz extends Component {
     completed: false,
   };
 
-  answeredSuccessfully = outcome => {
+  answeredSuccessfully = async outcome => {
+    const completed =
+      this.props.questions.length <= this.state.currentQuestion + 1;
+
+    if (completed) {
+      await dismissTodaysNotification();
+    }
+
     this.setState({
       currentQuestion: this.state.currentQuestion + 1,
       score: this.state.score + !!outcome,
-      completed: this.props.questions.length <= this.state.currentQuestion + 1,
+      completed,
     });
   };
 
@@ -97,9 +105,9 @@ class Question extends Component {
     this.setState({ answerVisible: true });
   };
 
-  onAnswered = outcome => {
+  onAnswered = async outcome => {
     this.setState({ answerVisible: false });
-    this.props.onAnswered(outcome);
+    await this.props.onAnswered(outcome);
   };
 
   render() {

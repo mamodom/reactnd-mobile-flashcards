@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FAB } from 'react-native-paper';
 
 import { navigate } from '../NavigationService';
+import { ensureNotificationIsSetup } from '../notificationService';
 
 import { fetchDecks } from '../actions';
 
@@ -14,8 +15,9 @@ class DeckList extends Component {
     title: 'Flashcards',
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.fetchDecks();
+    await ensureNotificationIsSetup();
   }
 
   render() {
