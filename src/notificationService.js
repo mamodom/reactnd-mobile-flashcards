@@ -1,4 +1,4 @@
-import { Notifications } from 'expo';
+import { Notifications, Permissions } from 'expo';
 import Storage from './storage';
 
 const notification = {
@@ -46,6 +46,9 @@ const scheduleNotification = async ({ tomorrow } = {}) => {
 };
 
 export const ensureNotificationIsSetup = async () => {
+  const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+  if (status !== 'granted') return;
+
   const nextNotification = await Storage.getNextNotification();
 
   if (!nextNotification) {

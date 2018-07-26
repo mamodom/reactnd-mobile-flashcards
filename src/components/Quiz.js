@@ -69,7 +69,11 @@ class Quiz extends Component {
               marginTop: 15,
             }}
           >
-            Score: {this.state.score / this.props.questions.length} %
+            Score:
+            {((100 * this.state.score) / this.props.questions.length).toFixed(
+              2
+            )}
+            %
           </Headline>
           <Button
             raised
